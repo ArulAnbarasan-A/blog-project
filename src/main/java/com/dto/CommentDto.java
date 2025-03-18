@@ -1,65 +1,57 @@
 package com.dto;
 
-import com.entity.Blog;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-
-@Entity
 public class CommentDto {
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-	
-	@Column(nullable = false, length = 200)
-    private String comment;
-	
-	@ManyToOne
-    @JoinColumn(name = "blog_id", nullable = false)
-    private Blog blog;
+	 private Long id;
 
-	public Long getId() {
-		return id;
-	}
+	    @NotBlank
+	    @Size(min = 3, max = 100)
+	    private String title;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+	    @NotBlank
+	    @Size(min = 3, max = 200)
+	    
+	    private String comment;
 
-	public String getComment() {
-		return comment;
-	}
+		public Long getId() {
+			return id;
+		}
 
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
+		public void setId(Long id) {
+			this.id = id;
+		}
 
-	public Blog getBlog() {
-		return blog;
-	}
+		public String getTitle() {
+			return title;
+		}
 
-	public void setBlog(Blog blog) {
-		this.blog = blog;
-	}
+		public void setTitle(String title) {
+			this.title = title;
+		}
 
-	public CommentDto(Long id, String comment, Blog blog) {
-		super();
-		this.id = id;
-		this.comment = comment;
-		this.blog = blog;
-	}
+		public String getComment() {
+			return comment;
+		}
 
-	public CommentDto() {
-		super();
-	}
+		public void setComment(String content) {
+			this.comment = content;
+		}
 
-	@Override
-	public String toString() {
-		return "CommentDto [id=" + id + ", comment=" + comment + ", blog=" + blog + "]";
-	}
+		public CommentDto(Long id,@NotBlank @Size(min = 3, max = 100) String title,@NotBlank @Size(min = 3, max = 200) String content) {
+			super();
+			this.id = id;
+			this.title = title;
+			this.comment = content;
+		}
+
+		public CommentDto() {
+			super();
+		}
+
+		@Override
+		public String toString() {
+			return "CommentDto [id=" + id + ", title=" + title + ", content=" + comment + "]";
+		}
 }

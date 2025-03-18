@@ -1,5 +1,8 @@
 package com.service;
 
-public class CommentService {
+import com.dto.CommentDto;
 
+public interface CommentService {
+    CommentDto postComment(CommentDto commentDto);
 }
+
