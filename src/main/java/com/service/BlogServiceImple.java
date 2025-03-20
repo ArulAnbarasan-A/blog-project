@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.dto.BlogDto;
 import com.entity.Blog;
 import com.exception.BlogNotFoundException;
+import com.exception.InvalidValueException;
 import com.repository.BlogRepository;
 
 @Service
@@ -30,6 +31,9 @@ public class BlogServiceImple implements BlogService {
 
     @Override
     public BlogDto getBlogById(Long id) {
+    	 if (id < 0) {
+             throw new InvalidValueException("Blog ID should be above 0");
+         }
         Blog blog = blogRepository.findById(id)
                 .orElseThrow(() -> new BlogNotFoundException("Blog not found with id: " + id));
         BlogDto blogDto = new BlogDto();
@@ -41,6 +45,9 @@ public class BlogServiceImple implements BlogService {
 
     @Override
     public BlogDto updateBlog(Long id, BlogDto blogDto) {
+    	if (id < 0) {
+            throw new InvalidValueException("Blog ID should be above 0");
+        }
         Blog blog = blogRepository.findById(id)
                 .orElseThrow(() -> new BlogNotFoundException("Blog not found with id: " + id));
         blog.setTitle(blogDto.getTitle());
@@ -52,6 +59,9 @@ public class BlogServiceImple implements BlogService {
 
     @Override
     public String deleteBlog(Long id) {
+    	 if (id < 0) {
+             throw new InvalidValueException("Blog ID should be above 0");
+         }
         Blog blog = blogRepository.findById(id)
                 .orElseThrow(() -> new BlogNotFoundException("Blog not found with id: " + id));
         blogRepository.delete(blog);

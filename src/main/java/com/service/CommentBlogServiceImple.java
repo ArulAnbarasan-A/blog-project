@@ -10,6 +10,7 @@ import com.entity.Blog;
 import com.entity.Comment;
 import com.exception.BlogNotFoundException;
 import com.exception.CommentNotFoundException;
+import com.exception.InvalidValueException;
 import com.repository.BlogRepository;
 import com.repository.CommentRepository;
 
@@ -27,6 +28,9 @@ public class CommentBlogServiceImple implements CommentService {
 
     @Override
     public CommentDto postComment(CommentDto commentDto) {
+    	if (commentDto.getBlogId() < 0) {
+            throw new InvalidValueException("Blog ID should be above 0");
+        }
         Blog blog = blogRepository.findById(commentDto.getBlogId())
                 .orElseThrow(() -> new BlogNotFoundException("Blog not found with id: " + commentDto.getBlogId()));
         System.out.println(blog);
@@ -54,7 +58,6 @@ public class CommentBlogServiceImple implements CommentService {
     @Override
     public List<CommentDto> getCommentsByBlogId(Long blogId) {
         List<Comment> comments = commentRepository.findByBlogId(blogId);
-        
         return comments.stream().map(comment -> {
             CommentDto dto = new CommentDto();
             dto.setId(comment.getId());
