@@ -38,8 +38,7 @@ public class BlogDto {
 		this.content = content;
 	}
 
-	public BlogDto(Long id, @NotBlank @Size(min = 3, max = 100) String title,
-			@NotBlank @Size(min = 3, max = 200) String content) {
+	public BlogDto(Long id, @NotBlank @Size(min = 3, max = 100) String title,@NotBlank @Size(min = 3, max = 200) String content) {
 		super();
 		this.id = id;
 		this.title = title;

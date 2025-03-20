@@ -1,63 +1,56 @@
 package com.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 @Entity
+@Table(name="comment")
 public class Comment {
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false, length = 200)
-    private String comment;
 
     @ManyToOne
     @JoinColumn(name = "blog_id", nullable = false)
     private Blog blog;
 
-	public Long getId() {
-		return id;
-	}
+    @Column(nullable = false, length = 200)
+    private String comment;
 
-	public void setId(Long id) {
-		this.id = id;
-	}
+    public Long getId() {
+        return id;
+    }
 
-	public String getComment() {
-		return comment;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	public void setComment(String comment) {
-		this.comment = comment;
-	}
+    public Blog getBlog() {
+        return blog;
+    }
 
-	public Blog getBlog() {
-		return blog;
-	}
+    public void setBlog(Blog blog) {
+        this.blog = blog;
+    }
 
-	public void setBlog(Blog blog) {
-		this.blog = blog;
-	}
+    public String getComment() {
+        return comment;
+    }
 
-	public Comment(Long id, String comment, Blog blog) {
-		super();
-		this.id = id;
-		this.comment = comment;
-		this.blog = blog;
-	}
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
 
-	public Comment() {
-		super();
-	}
+    public Comment(Long id, Blog blog, String comment) {
+        this.id = id;
+        this.blog = blog;
+        this.comment = comment;
+    }
 
-	@Override
-	public String toString() {
-		return "Comment [id=" + id + ", comment=" + comment + ", blog=" + blog + "]";
-	}
+    public Comment() {
+    }
+
+    @Override
+    public String toString() {
+        return "Comment [id=" + id + ", blog=" + blog + ", comment=" + comment + "]";
+    }
 }
