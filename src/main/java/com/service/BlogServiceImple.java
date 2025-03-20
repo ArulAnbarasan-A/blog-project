@@ -1,6 +1,10 @@
 package com.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
+
 import com.dto.BlogDto;
 import com.entity.Blog;
 import com.exception.BlogNotFoundException;
@@ -52,5 +56,17 @@ public class BlogServiceImple implements BlogService {
                 .orElseThrow(() -> new BlogNotFoundException("Blog not found with id: " + id));
         blogRepository.delete(blog);
         return "Blog deleted successfully";
+    }
+    
+    @Override
+    public List<BlogDto> getAllBlogs() {
+        List<Blog> blogs = blogRepository.findAll();
+        return blogs.stream().map(blog -> {
+            BlogDto blogDto = new BlogDto();
+            blogDto.setId(blog.getId());
+            blogDto.setTitle(blog.getTitle());
+            blogDto.setContent(blog.getContent());
+            return blogDto;
+        }).collect(Collectors.toList());
     }
 }

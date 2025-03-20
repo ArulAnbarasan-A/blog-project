@@ -1,5 +1,8 @@
 package com.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 
 import com.dto.CommentDto;
@@ -31,5 +34,17 @@ public class CommentBlogServiceImple implements CommentService {
         Comment savedComment = commentRepository.save(comment);
         commentDto.setId(savedComment.getId());
         return commentDto;
+    }
+    
+    @Override
+    public List<CommentDto> getAllComments() {
+        List<Comment> comments = commentRepository.findAll();
+        return comments.stream().map(comment -> {
+            CommentDto commentDto = new CommentDto();
+            commentDto.setId(comment.getId());
+            commentDto.setBlogId(comment.getBlog().getId());
+            commentDto.setComment(comment.getComment());
+            return commentDto;
+        }).collect(Collectors.toList());
     }
 }
